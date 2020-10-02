@@ -25,32 +25,14 @@ const cardsContainer = document.querySelector('.cards-container')
 
 axios.get('https://lambda-times-api.herokuapp.com/articles')
     .then(res => {
-
-        const jsArray = res.data.articles.javascript
-        const bsArray = res.data.articles.bootstrap
-        const techArray = res.data.articles.technology
-        const jqArray = res.data.articles.jquery
-        const nodeArray = res.data.articles.node
-
-        jsArray.forEach(articles => {
-            const card = cardMaker(articles)
-            cardsContainer.appendChild(card)
-        })
-        bsArray.forEach(articles => {
-            const card = cardMaker(articles)
-            cardsContainer.appendChild(card)
-        })
-        techArray.forEach(articles => {
-            const card = cardMaker(articles)
-            cardsContainer.appendChild(card)
-        })
-        jqArray.forEach(articles => {
-            const card = cardMaker(articles)
-            cardsContainer.appendChild(card)
-        })
-        nodeArray.forEach(articles => {
-            const card = cardMaker(articles)
-            cardsContainer.appendChild(card)
+        const dataObject = res.data.articles
+        const articles = Object.keys(dataObject)
+        articles.forEach(article => {
+            const articleArray = res.data.articles[article]
+            articleArray.forEach(item => {
+                const newCard = cardMaker(item)
+                cardsContainer.appendChild(newCard)
+            })
         })
     })
     .catch(error => {
