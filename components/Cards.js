@@ -22,6 +22,7 @@
 // Use your function to create a card for each of the articles, and append each card to the DOM.
 
 const cardsContainer = document.querySelector('.cards-container')
+
 axios.get('https://lambda-times-api.herokuapp.com/articles')
     .then(res => {
 
@@ -31,24 +32,29 @@ axios.get('https://lambda-times-api.herokuapp.com/articles')
         const jqArray = res.data.articles.jquery
         const nodeArray = res.data.articles.node
 
-        const javascript = cardMaker(jsArray)
-        const bootstrap = cardMaker(bsArray)
-        const technology = cardMaker(techArray)
-        const jquery = cardMaker(jqArray)
-        const node = cardMaker(nodeArray)
-
-        cardsContainer.appendChild(javascript)
-        cardsContainer.appendChild(bootstrap)
-        cardsContainer.appendChild(technology)
-        cardsContainer.appendChild(jquery)
-        cardsContainer.appendChild(node)
-
+        jsArray.forEach(articles => {
+            const card = cardMaker(articles)
+            cardsContainer.appendChild(card)
+        })
+        bsArray.forEach(articles => {
+            const card = cardMaker(articles)
+            cardsContainer.appendChild(card)
+        })
+        techArray.forEach(articles => {
+            const card = cardMaker(articles)
+            cardsContainer.appendChild(card)
+        })
+        jqArray.forEach(articles => {
+            const card = cardMaker(articles)
+            cardsContainer.appendChild(card)
+        })
+        nodeArray.forEach(articles => {
+            const card = cardMaker(articles)
+            cardsContainer.appendChild(card)
+        })
     })
-
     .catch(error => {
-
         debugger
-
     })
 
 function cardMaker(cardArray){
@@ -76,7 +82,7 @@ function cardMaker(cardArray){
     authorName.textContent = cardArray.authorName
 
     card.addEventListener('click', () => {
-        console.log(cardObject.headline)
+        console.log(cardArray.headline)
     })
 
     return card
